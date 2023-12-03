@@ -1,0 +1,71 @@
+﻿@model List<Student>
+@{
+	ViewData["Title"] = "Student details";
+	var errorMessage = TempData["errorMessage"]?.ToString();
+	var succesMassege = TempData["succesMassege"]?.ToString();
+}
+<h3>@ViewData["Title"]</h3>
+<hr />
+@if (!string.IsNullOrEmpty(@errorMessage))
+{
+	<div class="alert alert-danger">
+		<strong>Error! </strong>@errorMessage
+		<button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+
+	</div>
+}
+else if (!string.IsNullOrEmpty(@succesMassege))
+{
+	<div class="alert alert-success">
+	<strong>Succes! </strong>@succesMassege
+		<button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+
+	</div>
+}
+ <form>
+	 <button asp-controller="Student" asp-action="Create" class="btn btn-primary">Create Student</button>
+	 <hr />
+	 <table class="table-hover table-responsive table-bordered">
+		 <thead>
+			 <tr class="table-active">
+				 <th>Id</th>
+				 <th>Full Name</th>
+				 <th>User Name</th>
+				 <th>Email</th>
+				 <th>Phone</th>
+				 <th>Action</th>
+			 </tr>
+		 </thead>
+		 <tbody>
+			@if(Model != null && Model.Any())
+			{
+                foreach(var student in Model)
+                {
+					<tr>
+					<td>@student.Id</td>
+					<td>@student.FullName</td>
+					<td>@student.UserName</td>
+					<td>@student.Email</td>
+					<td>@student.Phone</td>
+					<td>
+						<div class="btn-group btn-group-sm">
+							<a asp-controller="Student" asp-action="Edit" asp-route-id="@student.Id" class="btn btn-primary">Edit</a>
+							<a asp-controller="Student" asp-action="Delete" asp-route-id="@student.Id" class="btn btn-danger">Delete</a>
+						</div>
+					</td>
+					</tr>
+				}
+			}
+			else
+			{
+				<tr>
+					<td colspan="6">
+						<div>
+							Hozircha Studentlar Yo'q!!!
+						</div>
+					</td>
+				</tr>
+			}
+		</tbody>
+	 </table>
+ </form>

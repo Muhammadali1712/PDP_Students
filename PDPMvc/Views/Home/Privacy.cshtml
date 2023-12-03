@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<script>
+    function getReCaptcha() {
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6LcpYMcUAAAAABdvDAhywpZtEuep7aQcyDLaPUR_', {
+                action: 'login'
+            }).then(function (token) {
+                if (token) {
+                    document.getElementById('g-recaptcha-response').value = token;
+                }
+                document.getElementById('login-btn').disabled = false;
+            });
+        });
+    }
+    getReCaptcha();
+    setInterval(function () {
+        getReCaptcha();
+    }, 150000);
+
+    $(".js-password-eye").on('click', function () {
+        var _this = $(this)
+        _pwd = $("[name=password]");
+        _this.find('i').removeClass()
+
+        if (_pwd.attr('type') === 'password') {
+            _this.find('i').addClass('fa fa-eye')
+            _pwd.attr('type', 'text');
+        } else {
+            _this.find('i').addClass('fa fa-eye-slash')
+            _pwd.attr('type', 'password');
+        }
+    });
+</script>

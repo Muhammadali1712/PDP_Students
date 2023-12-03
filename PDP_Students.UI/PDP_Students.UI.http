@@ -1,0 +1,6 @@
+@PDP_Students.UI_HostAddress = http://localhost:5208
+
+GET {{PDP_Students.UI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
