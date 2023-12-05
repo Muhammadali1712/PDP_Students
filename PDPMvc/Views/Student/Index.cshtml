@@ -1,4 +1,5 @@
-﻿@model List<Student>
+﻿@using PDP_Students.Application
+@model PaginatedList<Student>
 @{
 	ViewData["Title"] = "Student details";
 	var errorMessage = TempData["errorMessage"]?.ToString();
@@ -6,7 +7,7 @@
 }
 <h3>@ViewData["Title"]</h3>
 <hr />
-@if (!string.IsNullOrEmpty(@errorMessage))
+ @if (!string.IsNullOrEmpty(@errorMessage))
 {
 	<div class="alert alert-danger">
 		<strong>Error! </strong>@errorMessage
@@ -22,13 +23,13 @@ else if (!string.IsNullOrEmpty(@succesMassege))
 
 	</div>
 }
- <form>
-	 <button asp-controller="Student" asp-action="Create" class="btn btn-primary">Create Student</button>
-	 <hr />
-	 <table class="table-hover table-responsive table-bordered">
+<form>
+	<button asp-controller="Student" asp-action="Create" class="btn btn-primary mb-3">Create Student</button>
+		<div class="table-responsive">
+		<table class="table">
 		 <thead>
-			 <tr class="table-active">
-				 <th>Id</th>
+				<tr class="table-active ">
+					<th scope ="col">Id</th>
 				 <th>Full Name</th>
 				 <th>User Name</th>
 				 <th>Email</th>
@@ -41,8 +42,8 @@ else if (!string.IsNullOrEmpty(@succesMassege))
 			{
                 foreach(var student in Model)
                 {
-					<tr>
-					<td>@student.Id</td>
+					<tr >
+					<td >@student.Id</td>
 					<td>@student.FullName</td>
 					<td>@student.UserName</td>
 					<td>@student.Email</td>
@@ -68,4 +69,46 @@ else if (!string.IsNullOrEmpty(@succesMassege))
 			}
 		</tbody>
 	 </table>
- </form>
+	</div>
+</form>
+
+	<!-- Pagination -->
+	
+<style>
+	.pagination-container {
+		display: flex;
+		list-style: none;
+		padding: 0;
+		justify-content: flex-end;
+	}
+
+		.pagination-container a {
+			margin: 0 5px;
+			padding: 8px 12px;
+			text-decoration: none;
+			color: #007bff;
+			border: 1px solid #007bff;
+			border-radius: 4px;
+			transition: background-color 0.3s;
+		}
+
+			.pagination-container a:hover {
+				background-color: #007bff;
+				color: #fff;
+			}
+
+		.pagination-container .active {
+			background-color: #007bff;
+			color: #fff;
+			cursor: default;
+		}
+</style>
+<div class="pagination-container">
+	@if (Model.TotalPages > 1)
+	{
+		for (int i = 1; i <= Model.TotalPages; i++)
+		{
+			<a href="@Url.Action("Index", new { page = i })" class="@(i == Model.PageIndex ? "active" : "")">@i</a>
+		}
+	}
+</div>

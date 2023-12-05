@@ -1,11 +1,11 @@
 ﻿@model Student
+
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Student";
     var errorMessage = TempData["errorMessage"]?.ToString();
-    var succesMassege = TempData["succesMassege"]?.ToString();
 }
 
-<h1>Create</h1>
+<h3>@ViewData["Title"]</h3>
 <hr />
 @if (!string.IsNullOrEmpty(@errorMessage))
 {
@@ -15,10 +15,10 @@
 
     </div>
 }
-<form action="Create" method="post" asp-controller="Student" asp-action="Create">
+<form action="Create" method="post" autocomplete="off">
     <div class="mb-3">
         <label class="form-label">Full Name</label>
-        <input type="text" class="form-control" asp-for ="FullName" />
+        <input type="text" class="form-control" asp-for="FullName" />
         <span asp-validation-for="FullName" class="text-danger"></span>
     </div>
     <div class="mb-3">
@@ -28,7 +28,7 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Email</label>
-        <input type="text" class="form-control" asp-for="Email" />
+        <input type="email" class="form-control" asp-for="Email" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="mb-3">
@@ -36,9 +36,8 @@
         <input type="tel" class="form-control" asp-for="Phone" />
         <span asp-validation-for="Phone" class="text-danger"></span>
     </div>
-    <div>
+    <div class="d-grid">
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
-
 
