@@ -24,7 +24,9 @@ namespace PDPMvc
 			AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 			builder.Services.AddControllersWithViews();
 
-			builder.Services.AddInfrastructureServices(builder.Configuration);
+			//Console.WriteLine(File.ReadAllText(@"../PDP_Students.Infrasturucture/TextFile1.txt").ToString());
+
+            builder.Services.AddInfrastructureServices(builder.Configuration);
 			builder.Services.AddRazorPages();
 			builder.Services.AddApplicationServise();
 			builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).

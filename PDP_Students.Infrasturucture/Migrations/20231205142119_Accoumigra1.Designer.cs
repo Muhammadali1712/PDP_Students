@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PDP_Students.Infrasturucture.DataAcces;
@@ -11,9 +12,11 @@ using PDP_Students.Infrasturucture.DataAcces;
 namespace PDP_Students.Infrasturucture.Migrations
 {
     [DbContext(typeof(PDP_StudentDbContext))]
-    partial class PDP_StudentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231205142119_Accoumigra1")]
+    partial class Accoumigra1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

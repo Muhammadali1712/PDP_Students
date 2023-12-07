@@ -1,7 +1,7 @@
 ﻿@model Student
 
 @{
-    ViewData["Title"] = "Create Student";
+    ViewData["Title"] = "Edit Employee";
     var errorMessage = TempData["errorMessage"]?.ToString();
 }
 
@@ -15,7 +15,10 @@
 
     </div>
 }
-<form action="Create" method="post" autocomplete="on">
+<form action="Edit" method="post" autocomplete="off">
+    <div class="mb-3" hidden>
+        <input type="text" class="form-control" asp-for="Id" />
+    </div>
     <div class="mb-3">
         <label class="form-label">Full Name</label>
         <input type="text" class="form-control" asp-for="FullName" />
@@ -40,4 +43,8 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
-
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
