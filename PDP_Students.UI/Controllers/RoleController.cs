@@ -19,8 +19,9 @@ public class RoleController : ControllerBase
     }
     [HttpGet]
    //[EnableCors("corspolicy")]
-  /*  public async Task<ResponseModel<IEnumerable<Role>>> GetAll()
+   public async Task<IEnumerable<Role>> GetAll()
         =>await _roleServise.GetAllAsync();
+  /*
     [HttpGet]
     public async Task<ResponseModel<Role>> GetById(int id)
         =>await _roleServise.GetByIdAsync(id);

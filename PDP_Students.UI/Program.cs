@@ -1,8 +1,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PDP_Students.Application;
 using PDP_Students.Infrasturucture;
+using PDP_Students.UI.CustomMiddlaware;
+using RabbitMQ.Client.Events;
+using RabbitMQ.Client;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 
@@ -13,11 +17,12 @@ namespace PDP_Students.UI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+          
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddInfrastructureServices(builder.Configuration);
+            builder.Services.AddSignalR();
             builder.Services.AddSwaggerGen(options =>
             {
                 options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -29,6 +34,7 @@ namespace PDP_Students.UI
 
                 options.OperationFilter<SecurityRequirementsOperationFilter>();
             });
+            builder.Services.AddLogging();
             builder.Services.AddApplicationServise();
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
                 AddJwtBearer(config =>
@@ -57,10 +63,10 @@ namespace PDP_Students.UI
                 app.UseSwaggerUI();
             }
 
+            app.UseExeptionMiddlaware();//.UseMiddleware<ExeptionMiddlaware>();
             app.UseCors("corspolicy");
             app.UseHttpsRedirection();
             app.UseRouting();
-
 
             /*app.UseCors(builder => builder
              .WithOrigins("http://localhost:5093")
@@ -69,6 +75,7 @@ namespace PDP_Students.UI
              );*/
 
             app.UseAuthorization();
+            app.UseRabbitMq();
 
             app.MapControllers();
 

@@ -16,6 +16,7 @@ public static class ConfigureSerrvise
         services.AddScoped<IMentorServise, MentorServise>();
         services.AddScoped<IRoleServise, RoleServise>();
         services.AddScoped<IStudentCRUDServise, StudentCRUDServise>();
+        services.AddSingleton<IRabbitMqServise, RabbitMqService>();
         services.AddDbContext<PDP_StudentDbContext>(options =>
         options.UseNpgsql(configuration.GetConnectionString("PDPConnection")));
     }

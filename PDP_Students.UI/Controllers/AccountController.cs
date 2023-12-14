@@ -6,12 +6,16 @@ using PDP_Students.Domain.Entities;
 using PDP_Students.Domain.Models;
 using PDP_Students.Domain.Models.StudentDTO;
 using PDP_Students.Infrasturucture.DataAcces;
+using PDP_Students.UI.CustomFilters;
 
 namespace PDP_Students.UI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
     [Authorize]
+    [CustomAutorizationFilter]
+    [CustomRecourseFilter]
+    [CustomResultFilter]
     public class AccountController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -30,6 +34,7 @@ namespace PDP_Students.UI.Controllers
 
         public async Task<ResponseModel<GetRegisterModel>> Register(StudentCreateDTO studentCreate)
         {
+            throw new Exception();
             Student mappedStudent = _mapper.Map<Student>(studentCreate);
 
             ResponseModel<GetRegisterModel> studentEntity = await _studentServise.RegisterAsync(mappedStudent);
@@ -53,8 +58,13 @@ namespace PDP_Students.UI.Controllers
            => await _studentServise.RefreshTokenAsync(token);
 
         [HttpGet]
-        public Task<ResponseModel<bool>> LogOut()
-            => _studentServise.LogOutAsync();
+        [AllowAnonymous]
+        public async Task<ResponseModel<bool>> LogOut()
+        {
+            // _studentServise.LogOutAsync();
+            return new(true);
+        }
+            
 
         [HttpDelete]
         public Task<ResponseModel<bool>> Delete(int id)

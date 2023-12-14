@@ -23,7 +23,7 @@ namespace PDPMvc.Controllers
         [HttpGet]
         public async Task<ActionResult> Index(int? page)
         {
-            int pageSize = 2;
+            int pageSize = 4;
             int pageNumber = (page ?? 1);
             var students = _studentDbContext.Students.AsQueryable().OrderBy(x=>x.Id);
             var pagedList = await PaginatedList<Student>.CreateAsync(students, pageNumber, pageSize);
