@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MySql.Data.MySqlClient;
 using PDP_Students.Application.Servise;
 using PDP_Students.Infrasturucture.DataAcces;
 using PDP_Students.Infrasturucture.Servises;
@@ -19,5 +20,6 @@ public static class ConfigureSerrvise
         services.AddSingleton<IRabbitMqServise, RabbitMqService>();
         services.AddDbContext<PDP_StudentDbContext>(options =>
         options.UseNpgsql(configuration.GetConnectionString("PDPConnection")));
+        //services.AddScoped<MySqlConnection>(_ => new MySqlConnection(configuration.GetConnectionString("PDPConnection")));
     }
 }
